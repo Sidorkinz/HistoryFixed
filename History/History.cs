@@ -1648,7 +1648,7 @@ namespace History
 				new SqlColumn("Data", MySqlDbType.Int32),
 				new SqlColumn("Style", MySqlDbType.Int32),
 				new SqlColumn("Paint", MySqlDbType.Int32),
-				new SqlColumn("WorldID", MySqlDbType.Int32),
+				new SqlColumn("WorldID", MySqlDbType.VarChar) { Length = 100 }, // TShock 5.x: Guid string
 				new SqlColumn("Text", MySqlDbType.VarChar) { Length = 500 },
 				new SqlColumn("Alternate", MySqlDbType.Int32),
 				new SqlColumn("Random", MySqlDbType.Int32),

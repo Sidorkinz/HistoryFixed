@@ -1,0 +1,43 @@
+name: Build History Plugin
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:  # Позволяет запускать вручную
+
+jobs:
+  build:
+    runs-on: windows-latest  # Windows нужен для .NET Framework 4.5
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1.1
+    
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1
+    
+    - name: Restore NuGet packages
+      run: nuget restore History.sln
+    
+    - name: Build Solution
+      run: msbuild History.sln /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+    
+    - name: Upload DLL artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: History-Plugin
+        path: History/bin/Release/History.dll
+        if-no-files-found: error
+    
+    - name: Create Release (on tag)
+      if: startsWith(github.ref, 'refs/tags/v')
+      uses: softprops/action-gh-release@v1
+      with:
+        files: History/bin/Release/History.dll
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

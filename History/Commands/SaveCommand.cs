@@ -37,7 +37,7 @@ namespace History.Commands
 							{
 								command.AddParameter("@" + i, null);
 							}
-							command.Parameters[7].Value = Main.worldID;
+							command.Parameters[7].Value = Main.ActiveWorldFileData?.UniqueId.ToString() ?? "Unknown";
 
 							foreach (Action a in actions)
 							{
@@ -73,7 +73,7 @@ namespace History.Commands
 							{
 								command.AddParameter("@" + i, null);
 							}
-							command.Parameters[7].Value = Main.worldID;
+							command.Parameters[7].Value = Main.ActiveWorldFileData?.UniqueId.ToString() ?? "Unknown";
 
 							foreach (Action a in actions)
 							{

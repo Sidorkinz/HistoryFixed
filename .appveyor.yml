@@ -1,0 +1,27 @@
+version: 1.0.{build}
+
+image: Visual Studio 2022
+
+platform: Any CPU
+configuration: Release
+
+before_build:
+  - nuget restore History.sln
+
+build:
+  project: History.sln
+  verbosity: minimal
+
+artifacts:
+  - path: History\bin\Release\History.dll
+    name: History-Plugin
+
+deploy:
+  - provider: GitHub
+    release: v$(appveyor_build_version)
+    description: 'History Plugin for TShock 5.x - Auto-built by AppVeyor'
+    auth_token:
+      secure: YOUR_GITHUB_TOKEN_HERE  # Зашифруйте на AppVeyor
+    artifact: History-Plugin
+    on:
+      appveyor_repo_tag: true
