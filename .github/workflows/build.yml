@@ -13,19 +13,24 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1.1
+      uses: microsoft/setup-msbuild@v2
     
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1
+      uses: NuGet/setup-nuget@v2
+    
+    - name: List files (debug)
+      run: |
+        dir
+        dir History
     
     - name: Restore NuGet packages
       run: nuget restore History.sln
     
     - name: Build Solution
-      run: msbuild History.sln /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
+      run: msbuild History.sln /p:Configuration=Release /p:Platform="Any CPU" /verbosity:detailed
     
     - name: Upload DLL artifact
       uses: actions/upload-artifact@v4
