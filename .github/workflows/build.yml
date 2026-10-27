@@ -28,7 +28,7 @@ jobs:
       run: msbuild History.sln /p:Configuration=Release /p:Platform="Any CPU" /verbosity:minimal
     
     - name: Upload DLL artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: History-Plugin
         path: History/bin/Release/History.dll
